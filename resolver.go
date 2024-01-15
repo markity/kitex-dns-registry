@@ -3,6 +3,7 @@ package registry
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net"
 
 	"github.com/cloudwego/kitex/pkg/discovery"
@@ -28,6 +29,7 @@ func (r *dnsResolver) Resolve(ctx context.Context, desc string) (discovery.Resul
 	if err != nil {
 		return result, errors.New("no instcance remains for: " + desc + " " + err.Error())
 	}
+	fmt.Println(desc, names)
 	for _, v := range names {
 		ins := discovery.NewInstance("tcp", v+":8888", discovery.DefaultWeight, nil)
 		result.Instances = append(result.Instances, ins)
