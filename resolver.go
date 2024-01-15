@@ -3,6 +3,7 @@ package registry
 import (
 	"context"
 	"errors"
+	"net"
 
 	"github.com/cloudwego/kitex/pkg/discovery"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
@@ -23,7 +24,12 @@ func (r *dnsResolver) Target(ctx context.Context, target rpcinfo.EndpointInfo) (
 func (r *dnsResolver) Resolve(ctx context.Context, desc string) (discovery.Result, error) {
 	result := discovery.Result{}
 
-	ins := discovery.NewInstance("tcp", desc, discovery.DefaultWeight, nil)
+	addr, err := net.ResolveTCPAddr("tcp", desc)
+	if err != nil {
+		return result, errors.New("no instcance remains for: " + desc)
+	}
+
+	ins := discovery.NewInstance("tcp", addr.String()+":8888", discovery.DefaultWeight, nil)
 	result.Instances = append(result.Instances, ins)
 
 	if len(result.Instances) == 0 {
