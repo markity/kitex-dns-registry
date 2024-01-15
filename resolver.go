@@ -24,7 +24,7 @@ func (r *dnsResolver) Target(ctx context.Context, target rpcinfo.EndpointInfo) (
 func (r *dnsResolver) Resolve(ctx context.Context, desc string) (discovery.Result, error) {
 	result := discovery.Result{}
 
-	names, err := net.LookupAddr(desc)
+	names, err := net.LookupHost(desc)
 	if err != nil {
 		return result, errors.New("no instcance remains for: " + desc + " " + err.Error())
 	}
