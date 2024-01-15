@@ -12,7 +12,7 @@ type dnsResolver struct {
 }
 
 // error is always nil
-func NewEtcdResolver() (discovery.Resolver, error) {
+func NewDnsResolver() (discovery.Resolver, error) {
 	return &dnsResolver{}, nil
 }
 
