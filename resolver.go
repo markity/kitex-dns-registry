@@ -26,7 +26,7 @@ func (r *dnsResolver) Resolve(ctx context.Context, desc string) (discovery.Resul
 
 	names, err := net.LookupAddr(desc)
 	if err != nil {
-		return result, errors.New("no instcance remains for: " + desc)
+		return result, errors.New("no instcance remains for: " + desc + " " + err.Error())
 	}
 	for _, v := range names {
 		ins := discovery.NewInstance("tcp", v+":8888", discovery.DefaultWeight, nil)
